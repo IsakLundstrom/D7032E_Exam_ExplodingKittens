@@ -2,40 +2,62 @@ package main.explodingkittens.game.card;
 
 import main.explodingkittens.game.GameState;
 
+import java.util.Objects;
+
+/**
+ * Inheriting cards are possible cards in the game
+ */
 public abstract class Card {
 
     protected String name;
     protected boolean playable;
-    protected boolean nopeable;
 
     public Card() {
         this.name = "Card name placeholder";
-        this.playable = true;
-        this.nopeable = true;
     }
 
-    public void drawAction(GameState gameState){
+    /**
+     * The cards action
+     *
+     * @param gameState current GameState
+     */
+    public void action(GameState gameState) {
 
-    };
+    }
 
-    public void playAction(GameState gameState){
-
-    };
-
+    /**
+     * Get the name of the card
+     *
+     * @return the name
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Is the card playable on its own
+     *
+     * @return true if the card is playable, otherwise false
+     */
     public boolean isPlayable() {
         return playable;
-    }
-
-    public boolean isNopeable() {
-        return nopeable;
     }
 
     @Override
     public String toString() {
         return name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Card card = (Card) o;
+        return playable == card.playable && Objects.equals(name, card.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, playable);
     }
 }

@@ -1,7 +1,7 @@
 package main.explodingkittens.network;
 
 import main.explodingkittens.exception.EKNetworkException;
-import main.explodingkittens.io.message.MessageFactory;
+import main.explodingkittens.util.message.MessageFactory;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -10,15 +10,22 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
+/**
+ * A server implementation
+ */
 public class Server implements IServer {
 
     private final List<IClient> clients;
     private final ServerSocket serverSocket;
     private final int port;
 
+    /**
+     * Create a server
+     *
+     * @param port the port to open on
+     * @throws EKNetworkException
+     */
     public Server(int port) throws EKNetworkException {
         this.port = port;
         clients = new ArrayList<>();
@@ -29,17 +36,17 @@ public class Server implements IServer {
         }
     }
 
+    @Override
     public void setupServer(int nrPlayers, int nrBots) {
-        //clients.add(new PlayerClient(null, null, true));
         try {
             for (int i = 0; i < nrPlayers; i++) {
-                System.out.println("Waiting for " + (nrPlayers - i) + "(more) player(s) to join");
+                System.out.println("Waiting for " + (nrPlayers - i) + " player(s) to join");
                 Socket connectionSocket = serverSocket.accept();
                 ObjectInputStream inFromClient = new ObjectInputStream(connectionSocket.getInputStream());
                 ObjectOutputStream outToClient = new ObjectOutputStream(connectionSocket.getOutputStream());
-                clients.add(new PlayerClient(inFromClient, outToClient, false));
+                clients.add(new HumanClient(inFromClient, outToClient));
                 System.out.println("Player " + i + " connected\n");
-                outToClient.writeObject(MessageFactory.createMsg("You connected to the server as player " + i));
+                outToClient.writeObject(MessageFactory.createMsg("\nYou connected to the server as player " + i));
             }
         } catch (Exception e) {
             System.out.println("Failed to setup server");
@@ -49,8 +56,6 @@ public class Server implements IServer {
         }
 
     }
-
-
 
     @Override
     public List<IClient> getClients() {

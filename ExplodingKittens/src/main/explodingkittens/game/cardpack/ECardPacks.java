@@ -21,13 +21,15 @@ public enum ECardPacks {
 
     private final List<Card> cards;
     private final int nrExtraPlayers;
-    ECardPacks(List<Card> cards, int nrExtraPlayers){
+
+    ECardPacks(List<Card> cards, int nrExtraPlayers) {
         this.cards = cards;
         this.nrExtraPlayers = nrExtraPlayers;
     }
 
     /**
      * Get the cards of the card pack
+     *
      * @return the list of cards
      */
     public List<Card> getCards() {
@@ -36,6 +38,7 @@ public enum ECardPacks {
 
     /**
      * Get the number of (extra) players for this card pack
+     *
      * @return number of players
      */
     public int getNrExtraPlayers() {

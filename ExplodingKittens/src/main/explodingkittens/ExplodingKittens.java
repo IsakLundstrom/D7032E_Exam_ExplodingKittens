@@ -6,10 +6,10 @@ import main.explodingkittens.game.Game;
 import main.explodingkittens.game.GameState;
 import main.explodingkittens.game.cardpack.ECardPacks;
 import main.explodingkittens.io.Console;
-import main.explodingkittens.io.message.MessageFactory;
+import main.explodingkittens.util.message.MessageFactory;
 import main.explodingkittens.io.option.Option;
 import main.explodingkittens.io.option.Options;
-import main.explodingkittens.network.PlayerClient;
+import main.explodingkittens.network.HumanClient;
 import main.explodingkittens.network.Server;
 
 import java.util.ArrayList;
@@ -18,9 +18,13 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Stream;
 
+/**
+ * Class for creating and starting a normal game
+ */
 public class ExplodingKittens {
 
     private final Console console;
+
     public ExplodingKittens() {
         this.console = Console.getInstance();
         console.print("\nWelcome to Exploding Kittens!\n");
@@ -50,7 +54,8 @@ public class ExplodingKittens {
         setupServer(gameState);
         Game game = new Game(gameState);
         try {
-            game.initServerGame();
+            game.setupGame();
+            game.serverGameLoop();
         } catch (EKIOException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -59,14 +64,14 @@ public class ExplodingKittens {
     private void getPacksUsed(GameState gameState) {
         List<String> cardPacks = Stream.of(ECardPacks.values()).map(ECardPacks::name).toList();
         List<String> addedPacks = new ArrayList<>();
-        while(true) {
+        while (true) {
             List<Option> packOptList = new ArrayList<>();
-            for (int i = 1; i < cardPacks.size(); i++){
+            for (int i = 1; i < cardPacks.size(); i++) {
                 if (!addedPacks.contains(cardPacks.get(i))) {
                     packOptList.add(new Option(cardPacks.get(i)));
                 }
             }
-            if (packOptList.size() == 0){
+            if (packOptList.size() == 0) {
                 break;
             }
             String continueKey = "";
@@ -78,23 +83,25 @@ public class ExplodingKittens {
                 break;
             }
             addedPacks.add(chosenPackOption);
-            gameState.addCardPackToGame(chosenPackOption);
+            gameState.addCardPackFromString(chosenPackOption);
         }
     }
 
     private void setupServer(GameState gameState) {
-        int maxPlayingEntities = gameState.getMaxNrPlayers();
+        int maxPlayingEntities = gameState.getMaxAllowedPlayers();
         console.print(String.format("Choose number of players (max %d, min 1):", maxPlayingEntities));
         int players = console.getIntMaxMin(maxPlayingEntities, 1);
         console.print(String.format("Choose number of bots (max %d, min 0) (Bots not currently available, please choose 0):", maxPlayingEntities - players));
         int bots = console.getIntMaxMin(maxPlayingEntities - players, 0);
         console.print("What port should the server open on? (eg. 2048)");
+        int port = console.getIntMin(0);
+        console.print("Create local client? (1 for yes, 0 for no)");
+        int createClient = console.getIntMaxMin(1, 0);
         try {
-            int port = console.getIntMin(0);
             Server server = new Server(port);
-            createLocalClient(port);
+            if (createClient > 0) createLocalClient(port);
             server.setupServer(players, bots);
-            gameState.initPlayingEntities(server.getClients());
+            gameState.initPlayers(server.getClients());
         } catch (EKNetworkException e) {
             throw new RuntimeException(e);
         }
@@ -105,7 +112,7 @@ public class ExplodingKittens {
         Runnable connectLocalClient = () -> {
             try {
                 Thread.sleep(200);
-                PlayerClient client = new PlayerClient().connect("127.0.0.1", port);
+                HumanClient client = new HumanClient().connect("127.0.0.1", port);
                 Game game = new Game();
                 game.initClientGame(client);
             } catch (InterruptedException | EKNetworkException | EKIOException e) {
@@ -116,13 +123,13 @@ public class ExplodingKittens {
     }
 
     private void joinServer() {
-        console.print("What ip address has the server? (press <<Enter>> to connect to [ip] = 127.0.0.1)");
+        console.print("What ip address has the server? (press <<Enter>> to connect to ip = 127.0.0.1)");
         String tmp = console.getString();
         String ip = tmp.equals("") ? "127.0.0.1" : tmp;
-        console.print("What port has opened on the server? [ip] = " + ip + "?");
+        console.print("What port has opened on the server? [ip = " + ip + "?]");
         int port = console.getInt();
         try {
-            PlayerClient client = new PlayerClient().connect(ip, port);
+            HumanClient client = new HumanClient().connect(ip, port);
             Game game = new Game();
             game.initClientGame(client);
         } catch (EKNetworkException | EKIOException e) {
@@ -131,6 +138,11 @@ public class ExplodingKittens {
     }
 
 
+    /**
+     * The method for starting the game
+     *
+     * @param argv
+     */
     public static void main(String[] argv) {
         new ExplodingKittens();
     }

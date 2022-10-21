@@ -19,8 +19,4 @@ public class EKIOException extends Exception {
         super(cause);
     }
 
-    //TODO : remove maybe
-    public EKIOException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
-        super(message, cause, enableSuppression, writableStackTrace);
-    }
 }

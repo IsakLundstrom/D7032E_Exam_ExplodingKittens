@@ -1,17 +1,17 @@
 package main.explodingkittens.game.cardpack;
 
-import main.explodingkittens.game.card.catcard.CattermelonCard;
-import main.explodingkittens.game.card.catcard.HairyPotatoCatCard;
-import main.explodingkittens.game.card.catcard.OverweightBikiniCatCard;
-import main.explodingkittens.game.card.catcard.RainbowRalphingCatCard;
-import main.explodingkittens.game.card.catcard.TacoCatCard;
-import main.explodingkittens.game.card.effectcard.unplayablecard.NopeCard;
-import main.explodingkittens.game.card.effectcard.SeeTheFutureCard;
-import main.explodingkittens.game.card.effectcard.ShuffleCard;
-import main.explodingkittens.game.card.effectcard.SkipCard;
-import main.explodingkittens.game.card.effectcard.AttackCard;
+import main.explodingkittens.game.card.unplayablecard.catcard.CattermelonCard;
+import main.explodingkittens.game.card.unplayablecard.catcard.HairyPotatoCatCard;
+import main.explodingkittens.game.card.unplayablecard.catcard.OverweightBikiniCatCard;
+import main.explodingkittens.game.card.unplayablecard.catcard.RainbowRalphingCatCard;
+import main.explodingkittens.game.card.unplayablecard.catcard.TacoCatCard;
+import main.explodingkittens.game.card.playablecard.AttackCard;
+import main.explodingkittens.game.card.playablecard.targetcard.FavorCard;
+import main.explodingkittens.game.card.playablecard.SeeTheFutureCard;
+import main.explodingkittens.game.card.playablecard.ShuffleCard;
+import main.explodingkittens.game.card.playablecard.SkipCard;
+import main.explodingkittens.game.card.unplayablecard.NopeCard;
 import main.explodingkittens.game.card.Card;
-import main.explodingkittens.game.card.targetcard.FavorCard;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -2,10 +2,11 @@ package main.explodingkittens.network;
 
 import main.explodingkittens.exception.EKIOException;
 import main.explodingkittens.exception.EKNetworkException;
-import main.explodingkittens.io.message.IMessage;
+import main.explodingkittens.util.message.IMessage;
 
 /**
  * A client interface for connecting to a server
+ *
  * @param <T> The implementing class
  */
 public interface IClient<T> {
@@ -22,16 +23,18 @@ public interface IClient<T> {
 
     /**
      * Try and disconnect this IClient
+     *
      * @throws EKIOException when failed to disconnect
      */
     void disconnect() throws EKIOException;
 
     /**
      * Send a message string to the remote or local
+     *
      * @param msg the message to send
      * @throws EKIOException when a message could not be sent
      */
-    public void sendMessage(IMessage msg) throws EKIOException;
+    void sendMessage(IMessage msg) throws EKIOException;
 
     /**
      * Receive a message from remote or local
@@ -39,14 +42,7 @@ public interface IClient<T> {
      * @return the message sent
      * @throws EKIOException when the message could not be read
      */
-    public IMessage readMessage() throws EKIOException;
+    IMessage readMessage() throws EKIOException;
 
-    /**
-     * Receive an interuptable message from remote or local
-     *
-     * @return the message sent
-     * @throws EKIOException when the message could not be read
-     */
-    public IMessage readInteruptableMessage(int secondsToInterrupt) throws EKIOException;
 
 }
