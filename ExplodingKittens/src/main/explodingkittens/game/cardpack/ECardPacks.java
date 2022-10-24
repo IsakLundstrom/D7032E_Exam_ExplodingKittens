@@ -14,6 +14,7 @@ public enum ECardPacks {
      * Base game card pack
      */
     ExplodingKittens(new ExplodingKittensPack().createCardPack(), 5),
+
     /**
      * Expansion 1 card pack
      */

@@ -3,12 +3,13 @@ package main.explodingkittens;
 import main.explodingkittens.exception.EKIOException;
 import main.explodingkittens.exception.EKNetworkException;
 import main.explodingkittens.game.Game;
+import main.explodingkittens.game.GameLogic;
 import main.explodingkittens.game.GameState;
 import main.explodingkittens.game.cardpack.ECardPacks;
 import main.explodingkittens.io.Console;
 import main.explodingkittens.util.message.MessageFactory;
-import main.explodingkittens.io.option.Option;
-import main.explodingkittens.io.option.Options;
+import main.explodingkittens.util.option.Option;
+import main.explodingkittens.util.option.Options;
 import main.explodingkittens.network.HumanClient;
 import main.explodingkittens.network.Server;
 
@@ -62,17 +63,14 @@ public class ExplodingKittens {
     }
 
     private void getPacksUsed(GameState gameState) {
-        List<String> cardPacks = Stream.of(ECardPacks.values()).map(ECardPacks::name).toList();
-        List<String> addedPacks = new ArrayList<>();
+        List<String> existingCardPacks = new ArrayList<>(Stream.of(ECardPacks.values()).map(ECardPacks::name).toList());
+        existingCardPacks.remove(ECardPacks.ExplodingKittens.name());
+        //Add base game to game state
+        gameState.addCardPack(ECardPacks.ExplodingKittens);
         while (true) {
             List<Option> packOptList = new ArrayList<>();
-            for (int i = 1; i < cardPacks.size(); i++) {
-                if (!addedPacks.contains(cardPacks.get(i))) {
-                    packOptList.add(new Option(cardPacks.get(i)));
-                }
-            }
-            if (packOptList.size() == 0) {
-                break;
+            for (String cardPack : existingCardPacks) {
+                packOptList.add(new Option(cardPack));
             }
             String continueKey = "";
             packOptList.add(new Option(continueKey, "press <<Enter>> to continue"));
@@ -82,13 +80,13 @@ public class ExplodingKittens {
             if (chosenPackOption.equals(continueKey)) {
                 break;
             }
-            addedPacks.add(chosenPackOption);
             gameState.addCardPackFromString(chosenPackOption);
+            existingCardPacks.remove(chosenPackOption);
         }
     }
 
     private void setupServer(GameState gameState) {
-        int maxPlayingEntities = gameState.getMaxAllowedPlayers();
+        int maxPlayingEntities = new GameLogic().getMaxAllowedPlayers(gameState);
         console.print(String.format("Choose number of players (max %d, min 1):", maxPlayingEntities));
         int players = console.getIntMaxMin(maxPlayingEntities, 1);
         console.print(String.format("Choose number of bots (max %d, min 0) (Bots not currently available, please choose 0):", maxPlayingEntities - players));

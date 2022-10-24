@@ -1,5 +1,6 @@
 package main.explodingkittens.game;
 
+import main.explodingkittens.exception.EKRequirmentException;
 import main.explodingkittens.game.cardpack.ECardPacks;
 import main.explodingkittens.game.cardpile.CardPile;
 import main.explodingkittens.network.IClient;
@@ -24,10 +25,18 @@ public class GameState {
         drawPile = new CardPile();
         discardPile = new CardPile();
         cardPacksUsed = new ArrayList<>();
-        cardPacksUsed.add(ECardPacks.ExplodingKittens);
         nrTurns = 1;
         nrNopes = 0;
-        drawCard = true;
+        drawCard = false;
+    }
+
+    /**
+     * Add a card pack used
+     *
+     * @param cardPack the card pack
+     */
+    public void addCardPack(ECardPacks cardPack) {
+        cardPacksUsed.add(cardPack);
     }
 
     /**
@@ -90,15 +99,6 @@ public class GameState {
     }
 
     /**
-     * Remove a player from the game
-     *
-     * @return the removed player
-     */
-    public Player removePlayerFromGame() {
-        return playingOrder.remove(0);
-    }
-
-    /**
      * Shift to the next player
      */
     public void nextPlayer() {
@@ -108,25 +108,14 @@ public class GameState {
     }
 
     /**
-     * Get the max allowed players depending on the chosen card packs
+     * Remove a player from the game
      *
-     * @return the max number players allowed in the game
+     * @param player the player
+     * @return the removed player
      */
-    public int getMaxAllowedPlayers() {
-        int nrPlayers = 0;
-        for (ECardPacks pack : cardPacksUsed) {
-            nrPlayers += pack.getNrExtraPlayers();
-        }
-        return nrPlayers;
-    }
-
-    /**
-     * Get the minimum amount of allowed players in the game
-     *
-     * @return the minimum allowed players
-     */
-    public int getMinAllowedPlayers() {
-        return 2;
+    public Player removePlayerFromGame(Player player) {
+        discardPile.insert(player.getHand().getCards());
+        return playingOrder.remove(playingOrder.indexOf(player));
     }
 
     /**

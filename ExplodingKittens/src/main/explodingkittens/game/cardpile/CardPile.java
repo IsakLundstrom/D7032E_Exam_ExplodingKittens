@@ -86,8 +86,9 @@ public class CardPile {
      */
     public Card extract(String card) {
         if (toStringList().contains(card)) {
-            cards.remove(toStringList().indexOf(card));
-            return cards.get(toStringList().indexOf(card));
+            Card tmp = cards.get(toStringList().indexOf(card));
+            cards.remove(tmp);
+            return tmp;
         }
         return null;
     }
@@ -123,6 +124,15 @@ public class CardPile {
      */
     public void shuffle() {
         Collections.shuffle(cards);
+    }
+
+    /**
+     * Shuffle the pile with a random to get a predictable shuffle
+     *
+     * @param random the random
+     */
+    public void shuffle(Random random) {
+        Collections.shuffle(cards, random);
     }
 
     /**

@@ -1,6 +1,7 @@
-package main.explodingkittens.io.option;
+package main.explodingkittens.util.option;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Option implements IOption, Serializable {
 
@@ -44,5 +45,18 @@ public class Option implements IOption, Serializable {
             return "\t[" + key + "]";
         }
         return "\t[" + key + "] : " + description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Option option = (Option) o;
+        return Objects.equals(key, option.key) && Objects.equals(description, option.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(key, description);
     }
 }

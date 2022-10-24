@@ -1,9 +1,9 @@
 package main.explodingkittens.exception;
 
 /**
- * Exception that are thrown by a network component.
+ * Exception that is thrown by a network component.
  */
-public class EKNetworkException extends Exception {
+public class EKNetworkException extends EKException {
     public EKNetworkException() {
     }
 
@@ -17,6 +17,10 @@ public class EKNetworkException extends Exception {
 
     public EKNetworkException(Throwable cause) {
         super(cause);
+    }
+
+    public EKNetworkException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+        super(message, cause, enableSuppression, writableStackTrace);
     }
 
 }

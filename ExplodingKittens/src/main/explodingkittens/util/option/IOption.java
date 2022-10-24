@@ -1,4 +1,4 @@
-package main.explodingkittens.io.option;
+package main.explodingkittens.util.option;
 
 /**
  * An interface for creating an option

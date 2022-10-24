@@ -1,13 +1,13 @@
-package main.explodingkittens.game.card.kittencard;
+package main.explodingkittens.game.card.unplayablecard.kittencard;
 
 import main.explodingkittens.exception.EKIOException;
 import main.explodingkittens.game.Player;
 import main.explodingkittens.game.GameState;
 import main.explodingkittens.game.card.unplayablecard.DefuseCard;
 import main.explodingkittens.util.message.MessageFactory;
-import main.explodingkittens.io.option.Option;
-import main.explodingkittens.io.option.Options;
-import main.explodingkittens.io.option.RangeOption;
+import main.explodingkittens.util.option.Option;
+import main.explodingkittens.util.option.Options;
+import main.explodingkittens.util.option.RangeOption;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class ExplodingKittenCard extends KittenCard {
             }
             return;
         }
-        gameState.removePlayerFromGame();
+        gameState.removePlayerFromGame(gameState.getPlayingOrder().get(0));
         gameState.setNrTurns(1);
     }
 }

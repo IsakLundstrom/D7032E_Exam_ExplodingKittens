@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Player {
 
     private final int id;
-    private final CardPile hand;
+    private CardPile hand;
     private final IClient client;
 
     /**
@@ -48,6 +48,15 @@ public class Player {
      */
     public CardPile getHand() {
         return hand;
+    }
+
+    /**
+     * Set the card pile for the player
+     *
+     * @param hand the card pile
+     */
+    public void setHand(CardPile hand) {
+        this.hand = hand;
     }
 
     @Override

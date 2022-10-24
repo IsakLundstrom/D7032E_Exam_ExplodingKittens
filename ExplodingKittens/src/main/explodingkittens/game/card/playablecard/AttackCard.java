@@ -12,7 +12,6 @@ public class AttackCard extends PlayableCard {
     @Override
     public void action(GameState gameState) {
         gameState.addNrTurns(gameState.getNrTurns() == 1 ? 1 : 2);
-        gameState.setDrawCard(false);
         gameState.nextPlayer();
     }
 }

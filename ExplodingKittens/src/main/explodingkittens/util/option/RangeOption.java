@@ -1,4 +1,4 @@
-package main.explodingkittens.io.option;
+package main.explodingkittens.util.option;
 
 import java.io.Serializable;
 import java.util.ArrayList;

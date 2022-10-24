@@ -39,15 +39,7 @@ public class Server implements IServer {
     @Override
     public void setupServer(int nrPlayers, int nrBots) {
         try {
-            for (int i = 0; i < nrPlayers; i++) {
-                System.out.println("Waiting for " + (nrPlayers - i) + " player(s) to join");
-                Socket connectionSocket = serverSocket.accept();
-                ObjectInputStream inFromClient = new ObjectInputStream(connectionSocket.getInputStream());
-                ObjectOutputStream outToClient = new ObjectOutputStream(connectionSocket.getOutputStream());
-                clients.add(new HumanClient(inFromClient, outToClient));
-                System.out.println("Player " + i + " connected\n");
-                outToClient.writeObject(MessageFactory.createMsg("\nYou connected to the server as player " + i));
-            }
+            connectHumanPlayers(nrPlayers);
         } catch (Exception e) {
             System.out.println("Failed to setup server");
         }
@@ -55,6 +47,18 @@ public class Server implements IServer {
             clients.add(new BotClient());
         }
 
+    }
+
+    private void connectHumanPlayers(int nrPlayers) throws IOException {
+        for (int i = 0; i < nrPlayers; i++) {
+            System.out.println("Waiting for " + (nrPlayers - i) + " player(s) to join");
+            Socket connectionSocket = serverSocket.accept();
+            ObjectInputStream inFromClient = new ObjectInputStream(connectionSocket.getInputStream());
+            ObjectOutputStream outToClient = new ObjectOutputStream(connectionSocket.getOutputStream());
+            clients.add(new HumanClient(inFromClient, outToClient));
+            System.out.println("Player " + i + " connected\n");
+            outToClient.writeObject(MessageFactory.createMsg("\nYou connected to the server as player " + i));
+        }
     }
 
     @Override

@@ -1,7 +1,7 @@
 package main.explodingkittens.io;
 
 import main.explodingkittens.util.message.IMessage;
-import main.explodingkittens.io.option.Options;
+import main.explodingkittens.util.option.Options;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

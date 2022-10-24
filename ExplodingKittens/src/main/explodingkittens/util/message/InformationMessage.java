@@ -1,8 +1,9 @@
 package main.explodingkittens.util.message;
 
-import main.explodingkittens.io.option.Options;
+import main.explodingkittens.util.option.Options;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * An information message without options
@@ -39,10 +40,14 @@ public class InformationMessage implements IMessage, Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (!(o instanceof InformationMessage)) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        InformationMessage that = (InformationMessage) o;
+        return Objects.equals(msg, that.msg);
+    }
 
-        return this.equals((IMessage) o);
+    @Override
+    public int hashCode() {
+        return Objects.hash(msg, options);
     }
 }

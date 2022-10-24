@@ -3,7 +3,6 @@ package main.explodingkittens.network;
 import main.explodingkittens.exception.EKIOException;
 import main.explodingkittens.exception.EKNetworkException;
 import main.explodingkittens.util.message.IMessage;
-import main.explodingkittens.util.message.MessageFactory;
 
 import java.io.*;
 import java.net.Socket;

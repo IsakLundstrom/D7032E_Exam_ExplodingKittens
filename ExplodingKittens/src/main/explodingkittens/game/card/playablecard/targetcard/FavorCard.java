@@ -4,8 +4,8 @@ import main.explodingkittens.exception.EKIOException;
 import main.explodingkittens.game.GameState;
 import main.explodingkittens.game.Player;
 import main.explodingkittens.game.card.Card;
-import main.explodingkittens.io.option.Option;
-import main.explodingkittens.io.option.Options;
+import main.explodingkittens.util.option.Option;
+import main.explodingkittens.util.option.Options;
 import main.explodingkittens.util.message.MessageFactory;
 
 import java.util.ArrayList;
@@ -27,7 +27,7 @@ public class FavorCard extends TargetCard {
                 cardList.add(o);
         }
         try {
-            target.getClient().sendMessage(MessageFactory.createMsg("Give a card to player " + gameState.getPlayingOrder().get(0), new Options(cardList)));
+            target.getClient().sendMessage(MessageFactory.createMsg("Give a card to player " + gameState.getPlayingOrder().get(0).getId(), new Options(cardList)));
             String card = target.getClient().readMessage().toString();
             gameState.getPlayingOrder().get(0).getClient().sendMessage(MessageFactory.createMsg("You got a " + card));
             gameState.getPlayingOrder().get(0).getHand().insert(target.getHand().get(card));

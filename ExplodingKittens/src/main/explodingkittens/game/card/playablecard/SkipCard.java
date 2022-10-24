@@ -12,6 +12,6 @@ public class SkipCard extends PlayableCard {
 
     @Override
     public void action(GameState gameState) {
-        gameState.setDrawCard(false);
+        gameState.addNrTurns(-1);
     }
 }

@@ -1,6 +1,6 @@
 package main.explodingkittens.util.message;
 
-import main.explodingkittens.io.option.Options;
+import main.explodingkittens.util.option.Options;
 
 /**
  * A message factory for creating different messages
