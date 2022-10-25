@@ -1,5 +1,6 @@
 package main.explodingkittens.game;
 
+import main.explodingkittens.exception.EKException;
 import main.explodingkittens.exception.EKRequirmentException;
 import main.explodingkittens.game.cardpack.ECardPacks;
 import main.explodingkittens.game.cardpile.CardPile;
@@ -56,13 +57,39 @@ public class GameState {
      * Init all players in the game state from a list of clinets
      *
      * @param clients the list of clients
+     * @throws EKException if number of clients is greater or less than the allowed amount (2-5 in the base game)
      */
-    public void initPlayers(List<IClient> clients) {
+    public void initPlayers(List<IClient> clients) throws EKException {
+        if (clients.size() > getMaxAllowedPlayers() || clients.size() < getMinAllowedPlayers()) {
+            throw new EKException("Amount of players violates the rules. Input amount = " + clients.size());
+        }
         for (int i = 0; i < clients.size(); i++) {
             Player p = new Player(i, clients.get(i));
             allPlayers.add(p);
             playingOrder.add(p);
         }
+    }
+
+    /**
+     * Get the max allowed players depending on the chosen card packs
+     *
+     * @return the max number players allowed in the game
+     */
+    public int getMaxAllowedPlayers() {
+        int nrPlayers = 0;
+        for (ECardPacks pack : cardPacksUsed) {
+            nrPlayers += pack.getNrExtraPlayers();
+        }
+        return nrPlayers;
+    }
+
+    /**
+     * Get the minimum amount of allowed players in the game
+     *
+     * @return the minimum allowed players
+     */
+    public int getMinAllowedPlayers() {
+        return 2;
     }
 
     /**

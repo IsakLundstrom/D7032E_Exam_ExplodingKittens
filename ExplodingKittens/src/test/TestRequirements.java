@@ -2,7 +2,7 @@ package test;
 
 import static org.junit.Assert.*;
 
-import main.explodingkittens.exception.EKIOException;
+import main.explodingkittens.exception.EKException;
 import main.explodingkittens.game.*;
 import main.explodingkittens.game.card.Card;
 import main.explodingkittens.game.card.unplayablecard.kittencard.ExplodingKittenCard;
@@ -39,36 +39,34 @@ public class TestRequirements {
      * 1. There can be between 2 and 5 players
      */
 
-    @Test
-    public void r1_LessThanMinAllowedPlayers() {
+    @Test(expected = EKException.class)
+    public void r1_LessThanMinAllowedPlayers() throws EKException {
         List<IClient> clients = List.of(new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
-        assertTrue(gameLogic.getMinAllowedPlayers(gameState) > gameState.getAllPlayers().size());
     }
 
     @Test
-    public void r1_ExactMinAllowedPlayers() {
+    public void r1_ExactMinAllowedPlayers() throws EKException {
         List<IClient> clients = List.of(new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
-        assertEquals(gameLogic.getMinAllowedPlayers(gameState), gameState.getAllPlayers().size());
+        assertTrue(true);
     }
 
     @Test
-    public void r1_ExactMaxAllowedPlayers() {
+    public void r1_ExactMaxAllowedPlayers() throws EKException {
         List<IClient> clients = List.of(new TestClient(), new TestClient(), new TestClient(), new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
-        assertEquals(gameLogic.getMaxAllowedPlayers(gameState), gameState.getAllPlayers().size());
+        assertTrue(true);
     }
 
-    @Test
-    public void r1_MoreThanMaxAllowedPlayers() {
+    @Test(expected = EKException.class)
+    public void r1_MoreThanMaxAllowedPlayers() throws EKException {
         List<IClient> clients = List.of(new TestClient(), new TestClient(), new TestClient(), new TestClient(), new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
-        assertTrue(gameLogic.getMaxAllowedPlayers(gameState) < gameState.getAllPlayers().size());
     }
 
     /*
@@ -76,7 +74,7 @@ public class TestRequirements {
      */
 
     @Test
-    public void r2() {
+    public void r2() throws EKException {
         List<IClient> clients = List.of(new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
@@ -107,7 +105,7 @@ public class TestRequirements {
      */
 
     @Test
-    public void r3_TwoPlayers() {
+    public void r3_TwoPlayers() throws EKException {
         List<IClient> clients = List.of(new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
@@ -130,7 +128,7 @@ public class TestRequirements {
     }
 
     @Test
-    public void r3_FourPlayers() {
+    public void r3_FourPlayers() throws EKException {
         List<IClient> clients = List.of(new TestClient(), new TestClient(), new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
@@ -153,7 +151,7 @@ public class TestRequirements {
     }
 
     @Test
-    public void r3_FivePlayers() {
+    public void r3_FivePlayers() throws EKException {
         List<IClient> clients = List.of(new TestClient(), new TestClient(), new TestClient(), new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
@@ -179,7 +177,7 @@ public class TestRequirements {
      * 4. Shuffle the deck before the first hands are dealt.
      */
     @Test
-    public void r4() {
+    public void r4() throws EKException {
         List<IClient> clients = List.of(new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
@@ -202,7 +200,7 @@ public class TestRequirements {
      */
 
     @Test
-    public void r5() {
+    public void r5() throws EKException {
         List<IClient> clients = List.of(new TestClient(), new TestClient(), new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
@@ -222,7 +220,7 @@ public class TestRequirements {
      */
 
     @Test
-    public void r6() {
+    public void r6() throws EKException {
         List<IClient> clients = List.of(new TestClient(), new TestClient(), new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
@@ -242,7 +240,7 @@ public class TestRequirements {
      */
 
     @Test
-    public void r7() {
+    public void r7() throws EKException {
         List<IClient> clients = List.of(new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
@@ -268,7 +266,7 @@ public class TestRequirements {
      */
 
     @Test
-    public void r8() {
+    public void r8() throws EKException {
         List<IClient> clients = List.of(new TestClient(), new TestClient(), new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
@@ -290,7 +288,7 @@ public class TestRequirements {
      */
 
     @Test
-    public void r9_Pass() throws EKIOException, InterruptedException {
+    public void r9_Pass() throws EKException, InterruptedException {
         List<IClient> clients = List.of(new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
@@ -313,7 +311,7 @@ public class TestRequirements {
     }
 
     @Test
-    public void r9_Play() throws EKIOException, InterruptedException {
+    public void r9_Play() throws EKException, InterruptedException {
         List<IClient> clients = List.of(new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
@@ -346,7 +344,7 @@ public class TestRequirements {
      */
 
     @Test
-    public void r10_hasDefuse() throws EKIOException {
+    public void r10_hasDefuse() throws EKException {
         List<IClient> clients = List.of(new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
@@ -365,7 +363,7 @@ public class TestRequirements {
     }
 
     @Test
-    public void r10_hasNoDefuse() throws EKIOException {
+    public void r10_hasNoDefuse() throws EKException {
         List<IClient> clients = List.of(new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
@@ -395,7 +393,7 @@ public class TestRequirements {
      */
 
     @Test
-    public void r11_AttackOnes() {
+    public void r11_AttackOnes() throws EKException {
         List<IClient> clients = List.of(new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
@@ -412,7 +410,7 @@ public class TestRequirements {
     }
 
     @Test
-    public void r11_AttackTwice() {
+    public void r11_AttackTwice() throws EKException {
         List<IClient> clients = List.of(new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
@@ -431,7 +429,7 @@ public class TestRequirements {
     }
 
     @Test
-    public void r11_Favor() {
+    public void r11_Favor() throws EKException {
         List<IClient> clients = List.of(new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
@@ -452,7 +450,7 @@ public class TestRequirements {
     }
 
     @Test
-    public void r11_Shuffle() {
+    public void r11_Shuffle() throws EKException {
         List<IClient> clients = List.of(new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
@@ -469,7 +467,7 @@ public class TestRequirements {
     }
 
     @Test
-    public void r11_Skip() {
+    public void r11_Skip() throws EKException {
         List<IClient> clients = List.of(new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
@@ -487,7 +485,7 @@ public class TestRequirements {
     }
 
     @Test
-    public void r11_SeeTheFuture() {
+    public void r11_SeeTheFuture() throws EKException {
         List<IClient> clients = List.of(new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
@@ -507,7 +505,7 @@ public class TestRequirements {
     }
 
     @Test
-    public void r11_TwoCombo() {
+    public void r11_TwoCombo() throws EKException {
         List<IClient> clients = List.of(new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
@@ -527,7 +525,7 @@ public class TestRequirements {
     }
 
     @Test
-    public void r11_ThreeComboCardIsAvailable() {
+    public void r11_ThreeComboCardIsAvailable() throws EKException {
         List<IClient> clients = List.of(new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
@@ -548,7 +546,7 @@ public class TestRequirements {
     }
 
     @Test
-    public void r11_ThreeComboCardNotAvailable() {
+    public void r11_ThreeComboCardNotAvailable() throws EKException {
         List<IClient> clients = List.of(new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
@@ -572,7 +570,7 @@ public class TestRequirements {
      */
 
     @Test
-    public void r12_ZeroNopes() throws EKIOException, InterruptedException {
+    public void r12_ZeroNopes() throws EKException, InterruptedException {
         List<IClient> clients = List.of(new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
@@ -591,7 +589,7 @@ public class TestRequirements {
     }
 
     @Test
-    public void r12_OneNope() throws EKIOException, InterruptedException {
+    public void r12_OneNope() throws EKException, InterruptedException {
         List<IClient> clients = List.of(new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
@@ -613,7 +611,7 @@ public class TestRequirements {
     }
 
     @Test
-    public void r12_TwoNope() throws EKIOException, InterruptedException {
+    public void r12_TwoNope() throws EKException, InterruptedException {
         List<IClient> clients = List.of(new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);
@@ -642,7 +640,7 @@ public class TestRequirements {
      */
 
     @Test
-    public void r13() throws EKIOException {
+    public void r13() throws EKException {
         List<IClient> clients = List.of(new TestClient(), new TestClient());
         gameState.addCardPack(ECardPacks.ExplodingKittens);
         gameState.initPlayers(clients);

@@ -81,34 +81,10 @@ public class GameLogic {
      * @param random    a random
      */
     public void randomPlayerGoesFirst(GameState gameState, Random random) {
-        int r = random.nextInt(0, getMaxAllowedPlayers(gameState) + 1);
+        int r = random.nextInt(0, gameState.getMaxAllowedPlayers() + 1);
         for (int i = 0; i < r; i++) {
             gameState.nextPlayer();
         }
-    }
-
-    /**
-     * Get the max allowed players depending on the chosen card packs
-     *
-     * @param gameState game state
-     * @return the max number players allowed in the game
-     */
-    public int getMaxAllowedPlayers(GameState gameState) {
-        int nrPlayers = 0;
-        for (ECardPacks pack : gameState.getCardPacksUsed()) {
-            nrPlayers += pack.getNrExtraPlayers();
-        }
-        return nrPlayers;
-    }
-
-    /**
-     * Get the minimum amount of allowed players in the game
-     *
-     * @param gameState game state
-     * @return the minimum allowed players
-     */
-    public int getMinAllowedPlayers(GameState gameState) {
-        return 2;
     }
 
     /**
