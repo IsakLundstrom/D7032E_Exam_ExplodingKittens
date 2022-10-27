@@ -77,7 +77,8 @@ public class HumanClient implements IClient {
         } catch (IOException e) {
             throw new EKIOException("Could not read the message", e);
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
+        return null;
     }
 }

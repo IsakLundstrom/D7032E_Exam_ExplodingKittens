@@ -88,9 +88,9 @@ public class ExplodingKittens {
 
     private void setupServer(GameState gameState) {
         int maxPlayingEntities = gameState.getMaxAllowedPlayers();
-        console.print(String.format("Choose number of players (max %d, min 1):", maxPlayingEntities));
+        console.print(String.format("Choose number of players (max %d, min 1) (Bots not currently available, please choose at least 2 players):", maxPlayingEntities));
         int players = console.getIntMaxMin(maxPlayingEntities, 1);
-        console.print(String.format("Choose number of bots (max %d, min 0) (Bots not currently available, please choose 0):", maxPlayingEntities - players));
+        console.print(String.format("Choose number of bots (max %d, min " + (players > 1 ? 0 : 1) + ") (Bots not currently available, please choose 0):", maxPlayingEntities - players));
         int bots = console.getIntMaxMin(maxPlayingEntities - players, players > 1 ? 0 : 1);
         console.print("What port should the server open on? (eg. 2048)");
         int port = console.getIntMin(0);
@@ -102,7 +102,7 @@ public class ExplodingKittens {
             server.setupServer(players, bots);
             gameState.initPlayers(server.getClients());
         } catch (EKException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 
@@ -115,7 +115,7 @@ public class ExplodingKittens {
                 Game game = new Game();
                 game.initClientGame(client);
             } catch (InterruptedException | EKNetworkException | EKIOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         };
         threadpool.execute(connectLocalClient);

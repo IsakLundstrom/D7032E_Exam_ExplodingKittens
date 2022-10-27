@@ -30,7 +30,7 @@ public class ExplodingKittenCard extends KittenCard {
                 int pos = Integer.parseInt(currentPlayer.getClient().readMessage().toString().split(" ")[2]);
                 gameState.getDrawPile().insert(new ExplodingKittenCard(), pos);
             } catch (EKIOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
             return;
         }

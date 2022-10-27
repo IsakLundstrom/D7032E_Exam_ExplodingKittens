@@ -301,8 +301,8 @@ public class GameLogic {
                             p.getClient().sendMessage(MessageFactory.createMsg("Player " + player.getId() + " played a Nope"));
                         }
                     }
-                } catch (Exception e) {
-                    System.out.println("addToDiscardPile: " + e.getMessage());
+                } catch (EKIOException e) {
+                    e.printStackTrace();
                 }
             };
             threadpool.execute(task);

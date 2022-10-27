@@ -20,7 +20,7 @@ public class SeeTheFutureCard extends PlayableCard {
         try {
             gameState.getPlayingOrder().get(0).getClient().sendMessage(MessageFactory.createMsg("The top three cards in draw pile: " + s));
         } catch (EKIOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }

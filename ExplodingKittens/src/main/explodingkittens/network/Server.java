@@ -37,11 +37,11 @@ public class Server implements IServer {
     }
 
     @Override
-    public void setupServer(int nrPlayers, int nrBots) {
+    public void setupServer(int nrPlayers, int nrBots) throws EKNetworkException {
         try {
             connectHumanPlayers(nrPlayers);
-        } catch (Exception e) {
-            System.out.println("Failed to setup server");
+        } catch (IOException e) {
+            throw new EKNetworkException("Failed to setup server", e);
         }
         for (int i = 0; i < nrBots; i++) {
             clients.add(new BotClient());

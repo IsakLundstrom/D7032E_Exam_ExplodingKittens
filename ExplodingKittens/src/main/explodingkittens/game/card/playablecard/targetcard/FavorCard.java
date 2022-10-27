@@ -32,7 +32,7 @@ public class FavorCard extends TargetCard {
             gameState.getPlayingOrder().get(0).getClient().sendMessage(MessageFactory.createMsg("You got a " + card));
             gameState.getPlayingOrder().get(0).getHand().insert(target.getHand().get(card));
         } catch (EKIOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
 
     }
